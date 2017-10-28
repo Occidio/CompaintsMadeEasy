@@ -1,14 +1,13 @@
 var method = Account.prototype;
 
-function Account(accountid, password, title, firstname, surname, email, mobilenumber) {
+function Account(accountid, password, title, firstName, surname, email, mobilePhone) {
     this.accountid = accountid;
     this.password = password;
     this.title = title;
-    this.firstname = firstname;
+    this.firstName = firstName;
     this.surname = surname;
     this.email = email;
-    this.mobilenumber = mobilenumber;
+    this.mobilePhone = mobilePhone;
 };
-
 
 module.exports = Account;

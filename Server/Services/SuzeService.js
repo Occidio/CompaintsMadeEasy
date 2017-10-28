@@ -22,13 +22,13 @@ function SuzeService() {
 
 //ACCOUNT
 
-method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
+method.GetAccountByEmailAndPassword = function(emailAddress, password, callback) {
 
     var query = "EXEC getAccountByEmail";
     query += " @email='" + emailAddress + "'";
     query += ", @password='" + password + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
 
         if (!dbResponse.success) {
             callback({
@@ -55,35 +55,75 @@ method.GetAccountByEmailAndPassword = function (emailAddress, password, callback
 
             callback({
                 "success": true,
-                "response": new Account(returnedAccount.ACCOUNT_ID,
+                "response": new Account(
+                    returnedAccount.ACCOUNT_ID,
                     returnedAccount.PASSWORD,
                     returnedAccount.TITLE,
                     returnedAccount.FIRST_NAME,
                     returnedAccount.SURNAME,
                     returnedAccount.EMAIL,
-                    returnedAccount.MOBILE_NUMBER,
-                    returnedAccount.HOME_NUMBER,
-                    returnedAccount.HOUSE_NAME_NUMBER,
-                    returnedAccount.STREET,
-                    returnedAccount.CITY,
-                    returnedAccount.COUNTY,
-                    returnedAccount.POSTCODE)
+                    returnedAccount.MOBILE_NUMBER)
             });
         }
     });
 };
 
-method.AddAccount = function (account, callback) {
+method.GetAccountByAccountId = function(accountId, callback) {
+
+    var query = "EXEC getAccountByAccountId";
+    query += " @accountId='" + accountId + "'";
+
+    executeQuery(query, function(dbResponse) {
+
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        }
+
+        var responseSet = dbResponse.response.recordset;
+
+        if (responseSet.length == 0) {
+            callback({
+                "success": false,
+                "response": "No Account found."
+            });
+        } else if (responseSet.length != 1) {
+            callback({
+                "success": false,
+                "response": "Too many Accounts returned."
+            });
+        } else {
+
+            var returnedAccount = responseSet[0];
+
+            callback({
+                "success": true,
+                "response": new Account(
+                    returnedAccount.ACCOUNT_ID,
+                    returnedAccount.PASSWORD,
+                    returnedAccount.TITLE,
+                    returnedAccount.FIRST_NAME,
+                    returnedAccount.SURNAME,
+                    returnedAccount.EMAIL,
+                    returnedAccount.MOBILE_NUMBER)
+            });
+        }
+    });
+};
+
+method.AddAccount = function(account, callback) {
 
     var query = "EXEC addAccount";
     query += " @email='" + account.email + "'";
     query += ", @title ='" + account.title + "'";
-    query += ", @firstName='" + account.firstname + "'";
+    query += ", @firstName='" + account.firstName + "'";
     query += ", @surname='" + account.surname + "'";
-    query += ", @mobilePhone='" + account.mobilephone + "'";
+    query += ", @mobilePhone='" + account.mobilePhone + "'";
     query += ", @password='" + account.password + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -99,11 +139,15 @@ method.AddAccount = function (account, callback) {
 
 //COMPANY
 
+<<<<<<< HEAD
 method.GetCompanyByName = function (companyName, callback) {
+=======
+method.GetCompanyByName = function(companyName, callback) {
+>>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
     var query = "EXEC getCompanySearch";
     query += " @companyName  ='" + companyName + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -146,14 +190,18 @@ method.GetCompanyById = function (companyId, callback) {
 
 //COMPLAINT
 
+<<<<<<< HEAD
 method.MakeComplaint = function (complaint, callback) {
+=======
+method.AddComplaint = function(complaint, callback) {
+>>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
     query += ", @companyId='" + complaint.companyId + "'";
     query += ", @complaintReason ='" + complaint.reason + "'";
     query += ", @complaintDetails ='" + complaint.details + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -199,14 +247,20 @@ method.GetPoliceNumberByAccountId = function (accountId, callback) {
 };
 
 function executeQuery(query, callback) {
+<<<<<<< HEAD
  const pool = new sql.ConnectionPool(dbConfig).connect(function (err) {
+=======
+    sql.connect(dbConfig, function(err) {
+>>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
         if (err) {
             console.log("SS : Error connecting to DB");
             console.log(err);
 
+            sql.close();
             callback({
                 "success": false
             });
+<<<<<<< HEAD
         }
 
         var request = new sql.Request(pool);
@@ -221,9 +275,28 @@ function executeQuery(query, callback) {
             callback({
                 "success": true,
                 "response": recordset
+=======
+        } else {
+            var request = new sql.Request();
+            request.query(query, function(err, recordset) {
+                if (err) {
+                    console.log("SS : Error executing query on DB");
+                    console.log(err);
+
+                    sql.close();
+                    callback({
+                        "success": false
+                    });
+                } else {
+                    sql.close();
+                    callback({
+                        "success": true,
+                        "response": recordset
+                    });
+                }
+>>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
             });
-            sql.close();
-        });
+        }
     });
 };
 

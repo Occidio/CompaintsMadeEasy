@@ -1,4 +1,5 @@
 var SuzeService = require('./Services/SuzeService');
+var SMSService = require('./Services/SMSService');
 var Account = require('./Objects/Account');
 var Company = require('./Objects/Company');
 
@@ -123,23 +124,65 @@ app.post('/login', function (req, res) {
 app.post('/register', function (req, res) {
     var ss = new SuzeService();
 
-    var account = new Account(
-        0,
-        req.body.password,
-        req.body.title,
-        req.body.firstname,
-        req.body.surname,
-        req.body.email,
-        req.body.mobilenumber
-    );
+    ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
+        if (response.success) {
+            res.send({
+                "success": false,
+                "message": "Account already exists."
+            });
+        } else {
+            var account = new Account(
+                0,
+                req.body.password,
+                req.body.title,
+                req.body.firstName,
+                req.body.surname,
+                req.body.email,
+                req.body.mobilePhone
+            );
 
-    ss.AddAccount(account, function (response) {
-        res.send(response);
+        	var ss2 = new SuzeService();
+            ss2.AddAccount(account, function(response) {
+                if (response.success) {
+                    res.send({
+                        "success": true,
+                        "message": ""
+                    });
+                } else {
+                    res.send({
+                        "success": false,
+                        "message": "Issue with the service request: " + response.response
+                    });
+                }
+            });
+        }
     });
 });
 
-app.post('/logout', function (req, res) {
+app.get('/test', function(req, res) {
+    var ss = new SuzeService();
+
+    ss.GetAccountByEmail("test@testington.com", function(response) {
+        console.log("Main.js: got response from SS:");
+        console.log(response);
+        res.send("done");
+    });
+});
+
+app.post('/testSMS', function(req, res) {
+    var ss = new SMSService();
+
+    ss.SendSMS(req.body.message, req.body.accountId);
+    res.send("done");
+});
+
+app.post('/logout', function(req, res) {
     req.session.destroy();
+    res.send({
+        "success": true,
+        "message": ""
+    });
+
 });
 
 var server = app.listen(port, function () {
