@@ -99,7 +99,7 @@ method.AddAccount = function (account, callback) {
 
 //COMPANY
 
-method.GetCompanyByName(companyName, callback) {
+method.GetCompanyByName = function (companyName, callback){
     var query = "EXEC getCompanySearch";
     query += " @companyName  ='" + companyName + "'";
 
@@ -113,7 +113,6 @@ method.GetCompanyByName(companyName, callback) {
         
         var responseSet = dbResponse.response.recordset[0];
         
-        
         callback({
             "success": true,
             "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
@@ -123,7 +122,7 @@ method.GetCompanyByName(companyName, callback) {
 
 //COMPLAINT
 
-method.AddComplaint(complaint, callback) {
+method.AddComplaint = function (complaint, callback) {
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
     query += " @companyId='" + complaint.companyId + "'";
