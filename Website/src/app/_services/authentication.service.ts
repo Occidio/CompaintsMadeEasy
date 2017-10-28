@@ -15,6 +15,17 @@ export class AuthenticationService {
             .map(function(res: Response){
                 let body = res.json();
                 console.log(body.success);
+                let user = body.message;
+
+                if (user && body.success) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }
+                else{
+                    throw "Account Not found"
+                }
+
+                return user;
             });
 
     }
