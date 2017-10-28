@@ -4,6 +4,7 @@ var Company = require('./Objects/Company');
 
 var express = require('express');
 var session = require('express-session');
+var bodyParser = require('body-parser');
 
 var port = 4000;
 var app = express();
@@ -15,6 +16,7 @@ app.use(session({
 }))
 
 app.use(express.static('website'));
+app.use(bodyParser());
 
 app.post('/MakeComplaint', function(req, res) {
     if (!req.session.user) {
