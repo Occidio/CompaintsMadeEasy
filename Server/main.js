@@ -1,5 +1,7 @@
 var SuzeService = require('./Services/SuzeService');
 var Account = require('./Objects/Account');
+var Company = require('./Objects/Company');
+
 var express = require('express');
 var session = require('express-session');
 

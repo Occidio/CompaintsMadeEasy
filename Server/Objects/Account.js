@@ -14,7 +14,7 @@ function Account(accountid, password, title, firstname, surname, email, mobilenu
     this.county = county;
     this.postcode = postcode;
     this.password = password;
-}
+};
 
 
 module.exports = Account;

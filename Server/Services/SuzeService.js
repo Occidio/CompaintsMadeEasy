@@ -1,5 +1,6 @@
 var sql = require('mssql');
 var Account = require('../Objects/Account');
+var Company = require('../Objects/Company');
 
 var dbConfig = {
     server: 'ec2-52-211-119-222.eu-west-1.compute.amazonaws.com',
@@ -13,6 +14,8 @@ var method = SuzeService.prototype;
 function SuzeService() {
 
 };
+
+//ACCOUNT
 
 method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
 
@@ -81,7 +84,6 @@ method.AddAccount = function (account, callback) {
     query += " @postcode ='" + account.postcode + "'";
 
     executeQuery(query, function (dbResponse) {
-
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -89,6 +91,52 @@ method.AddAccount = function (account, callback) {
             });
         }
 
+        callback({
+            "success": true
+        });
+    });
+};
+
+//COMPANY
+
+method.GetCompanyByName(companyName, callback) {
+    var query = "EXEC getCompanySearch";
+    query += " @companyName  ='" + companyName + "'";
+
+    executeQuery(query, function (dbResponse) {
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        }
+        
+        var responseSet = dbResponse.response.recordset[0];
+        
+        
+        callback({
+            "success": true,
+            "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
+        });
+    });
+};
+
+//COMPLAINT
+
+method.AddComplaint(complaint, callback) {
+    var query = "EXEC addComplaint";
+    query += " @accountId ='" + complaint.accountId + "'";
+    query += " @companyId='" + complaint.companyId + "'";
+    query += " @complaintReason ='" + complaint.reason + "'";
+    query += " @complaintDetails ='" + complaint.details + "'";
+
+    executeQuery(query, function (dbResponse) {
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        }
         callback({
             "success": true
         });
