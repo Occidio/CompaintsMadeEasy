@@ -29,7 +29,7 @@ app.post('/MakeComplaint', function(req, res) {
                     "message": ""
                 });
             } else {
-        		res.send({
+                res.send({
                     "success": false,
                     "message": "Issue with the service request: " + response.message
                 });
@@ -44,13 +44,13 @@ app.post('/login', function(req, res) {
     ss.GetAccountByEmail(req.body.email, function(response) {
         if (response.success)
             user = response.account;
+
+        if (user) {
+            req.session.user = user;
+        }
+
+        res.send(user);
     });
-
-    if (user) {
-        req.session.user = user;
-    }
-
-    res.send(user);
 });
 
 app.post('/register', function(req, res) {
