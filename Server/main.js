@@ -44,7 +44,7 @@ app.post('/MakeComplaint', function(req, res) {
 
 app.post('/login', function(req, res) {
     var ss = new SuzeService();
-
+    console.log(req)
     ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
         if (response.success) {
             req.session.user = response.response;
