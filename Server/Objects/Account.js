@@ -1,6 +1,6 @@
 var method = Account.prototype;
 
-function Account(accountid, title, firstname, surname, email, mobilenumber, homephonenumber, housenumber, street, city, county, postcode) {
+function Account(accountid, password, title, firstname, surname, email, mobilenumber, homephonenumber, housenumber, street, city, county, postcode) {
     this.accountid = accountid;
     this.title = title;
     this.firstname = firstname;
@@ -13,6 +13,7 @@ function Account(accountid, title, firstname, surname, email, mobilenumber, home
     this.city = city;
     this.county = county;
     this.postcode = postcode;
+    this.password = password;
 }
 
 

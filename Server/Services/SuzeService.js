@@ -17,8 +17,8 @@ function SuzeService() {
 method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
 
     var query = "EXEC getAccountByEmailAndPassword";
-    query += " @email='" + emailAddress + "'"; 
-    query += " @password='" + password + "'"; 
+    query += " @email='" + emailAddress + "'";
+    query += " @password='" + password + "'";
 
     executeQuery(query, function (dbResponse) {
 
@@ -48,6 +48,7 @@ method.GetAccountByEmailAndPassword = function (emailAddress, password, callback
             callback({
                 "success": true,
                 "response": new Account(returnedAccount.ACCOUNT_ID,
+                    returnedAccount.PASSWORD,
                     returnedAccount.TITLE,
                     returnedAccount.FIRST_NAME,
                     returnedAccount.SURNAME,
