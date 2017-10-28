@@ -14,7 +14,7 @@ function SuzeService() {
 
 };
 
-method.GetAccountByEmail = function (emailAddress, password, callback) {
+method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
 
     var query = "EXEC getAccountByEmailAndPassword";
     query += " @email='" + emailAddress + "'"; 
