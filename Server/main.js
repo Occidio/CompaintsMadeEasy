@@ -79,11 +79,10 @@ app.post('/register', function(req, res) {
     );
 
     ss.AddAccount(account, function(response) {
-            res.send({
-                    "success": true,
-                    "message": response
-                }
-            });
+        res.send({
+            "success": true,
+            "message": response
+        });
     });
 });
 
