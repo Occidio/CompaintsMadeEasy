@@ -19,9 +19,9 @@ function SuzeService() {
 
 method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
 
-    var query = "EXEC getAccountByEmailAndPassword";
+    var query = "EXEC getAccountByEmail";
     query += " @email='" + emailAddress + "'";
-    query += " @password='" + password + "'";
+    query += ", @password='" + password + "'";
 
     executeQuery(query, function (dbResponse) {
 
@@ -72,16 +72,16 @@ method.AddAccount = function (account, callback) {
 
     var query = "EXEC addAccount";
     query += " @email='" + account.email + "'";
-    query += " @title ='" + account.title + "'";
-    query += " @firstName='" + account.firstname + "'";
-    query += " @surname='" + account.surname + "'";
-    query += " @mobilePhone='" + account.mobilephone + "'";
-    query += " @homePhone='" + account.homephone + "'";
-    query += " @houseNameNumber='" + account.houseNameNumber + "'";
-    query += " @street='" + account.street + "'";
-    query += " @city='" + account.city + "'";
-    query += " @county ='" + account.county + "'";
-    query += " @postcode ='" + account.postcode + "'";
+    query += ", @title ='" + account.title + "'";
+    query += ", @firstName='" + account.firstname + "'";
+    query += ", @surname='" + account.surname + "'";
+    query += ", @mobilePhone='" + account.mobilephone + "'";
+    query += ", @homePhone='" + account.homephone + "'";
+    query += ", @houseNameNumber='" + account.houseNameNumber + "'";
+    query += ", @street='" + account.street + "'";
+    query += ", @city='" + account.city + "'";
+    query += ", @county ='" + account.county + "'";
+    query += ", @postcode ='" + account.postcode + "'";
 
     executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
@@ -125,9 +125,9 @@ method.GetCompanyByName = function (companyName, callback){
 method.AddComplaint = function (complaint, callback) {
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
-    query += " @companyId='" + complaint.companyId + "'";
-    query += " @complaintReason ='" + complaint.reason + "'";
-    query += " @complaintDetails ='" + complaint.details + "'";
+    query += ", @companyId='" + complaint.companyId + "'";
+    query += ", @complaintReason ='" + complaint.reason + "'";
+    query += ", @complaintDetails ='" + complaint.details + "'";
 
     executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {

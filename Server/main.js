@@ -46,14 +46,18 @@ app.post('/login', function(req, res) {
     var ss = new SuzeService();
 
     ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
-        if (response.success)
-            user = response.account;
-
-        if (typeof something === "undefined") {
-            req.session.user = user;
+        if (response.success) {
+            req.session.user = response.response;
+            res.send({
+                "success": true,
+                "message": req.session.user
+            });
+        } else {
+            res.send({
+                "success": false,
+                "message": "Issue with the service request: " + response.response
+            });
         }
-
-        res.send(user);
     });
 });
 
