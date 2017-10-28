@@ -75,7 +75,7 @@ app.post('/register', function(req, res) {
         req.body.firstname,
         req.body.surname,
         req.body.email,
-        req.body.mobilenumber
+        req.body.mobilephone
     );
 
     ss.AddAccount(account, function(response) {

@@ -50,19 +50,59 @@ method.GetAccountByEmailAndPassword = function (emailAddress, password, callback
 
             callback({
                 "success": true,
-                "response": new Account(returnedAccount.ACCOUNT_ID,
+                "response": new Account(
+                    returnedAccount.ACCOUNT_ID,
                     returnedAccount.PASSWORD,
                     returnedAccount.TITLE,
                     returnedAccount.FIRST_NAME,
                     returnedAccount.SURNAME,
                     returnedAccount.EMAIL,
-                    returnedAccount.MOBILE_NUMBER,
-                    returnedAccount.HOME_NUMBER,
-                    returnedAccount.HOUSE_NAME_NUMBER,
-                    returnedAccount.STREET,
-                    returnedAccount.CITY,
-                    returnedAccount.COUNTY,
-                    returnedAccount.POSTCODE)
+                    returnedAccount.MOBILE_NUMBER)
+            });
+        }
+    });
+};
+
+method.GetAccountByAccountId = function (accountId, callback) {
+
+    var query = "EXEC getAccountByEmail";
+    query += " @accountId='" + accountId + "'";
+
+    executeQuery(query, function (dbResponse) {
+
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        }
+
+        var responseSet = dbResponse.response.recordset;
+
+        if (responseSet.length == 0) {
+            callback({
+                "success": false,
+                "response": "No Account found."
+            });
+        } else if (responseSet.length != 1) {
+            callback({
+                "success": false,
+                "response": "Too many Accounts returned."
+            });
+        } else {
+
+            var returnedAccount = responseSet[0];
+
+            callback({
+                "success": true,
+                "response": new Account(
+                    returnedAccount.ACCOUNT_ID,
+                    returnedAccount.PASSWORD,
+                    returnedAccount.TITLE,
+                    returnedAccount.FIRST_NAME,
+                    returnedAccount.SURNAME,
+                    returnedAccount.EMAIL,
+                    returnedAccount.MOBILE_NUMBER)
             });
         }
     });
