@@ -72,10 +72,10 @@ app.post('/register', function(req, res) {
         0,
         req.body.password,
         req.body.title,
-        req.body.firstname,
+        req.body.firstName,
         req.body.surname,
         req.body.email,
-        req.body.mobilephone
+        req.body.mobilePhone
     );
 
     ss.AddAccount(account, function(response) {

@@ -113,9 +113,9 @@ method.AddAccount = function (account, callback) {
     var query = "EXEC addAccount";
     query += " @email='" + account.email + "'";
     query += ", @title ='" + account.title + "'";
-    query += ", @firstName='" + account.firstname + "'";
+    query += ", @firstName='" + account.firstName + "'";
     query += ", @surname='" + account.surname + "'";
-    query += ", @mobilePhone='" + account.mobilephone + "'";
+    query += ", @mobilePhone='" + account.mobilePhone + "'";
     query += ", @password='" + account.password + "'";
 
     executeQuery(query, function (dbResponse) {
