@@ -5,9 +5,11 @@ var Company = require('./Objects/Company');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var port = 4000;
 var app = express();
+
 
 app.use(session({
     secret: 'complaintsmadeeasy',
@@ -17,6 +19,7 @@ app.use(session({
 
 app.use(express.static('website'));
 app.use(bodyParser());
+app.use(cors());
 
 app.post('/MakeComplaint', function(req, res) {
     if (!req.session.user) {
@@ -43,6 +46,7 @@ app.post('/MakeComplaint', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
     var ss = new SuzeService();
     console.log(req)
     ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
