@@ -1,3 +1,5 @@
+
+var SuzeService = require('./Services/SuzeService');
 var express = require('express');
 var session = require('client-sessions');
 
@@ -37,6 +39,15 @@ app.post('/login', function(req, res) {
 
 app.post('/register', function(req, res) {
  //TODO  
+});
+
+app.get('/test', function(req, res) {
+	var ss = new SuzeService();
+        
+    ss.GetAccountByEmail("test@testington.com", function(response){
+        console.log("Main.js: got response from SS:");      
+        console.log(response);
+    });
 });
 
 app.post('/logout', function(req, res) {
