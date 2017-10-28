@@ -67,6 +67,7 @@ app.get('/test', function(req, res) {
     ss.GetAccountByEmail("test@testington.com", function(response) {
         console.log("Main.js: got response from SS:");
         console.log(response);
+        res.send("done");
     });
 });
 
