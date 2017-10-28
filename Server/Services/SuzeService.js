@@ -14,9 +14,11 @@ function SuzeService() {
 
 };
 
-method.GetAccountByEmail = function (emailAddress, callback) {
+method.GetAccountByEmail = function (emailAddress, password, callback) {
 
-    var query = "EXEC getAccountByEmail '" + emailAddress + "'"
+    var query = "EXEC getAccountByEmailAndPassword";
+    query += " @email='" + emailAddress + "'"; 
+    query += " @password='" + password + "'"; 
 
     executeQuery(query, function (dbResponse) {
 
