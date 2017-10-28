@@ -1,61 +1,79 @@
-
 var SuzeService = require('./Services/SuzeService');
 var express = require('express');
-var session = require('client-sessions');
+var session = require('express-session');
 
+var port = 4000;
 var app = express();
+
+app.use(session({
+    secret: 'complaintsmadeeasy',
+    resave: false,
+    saveUninitialized: true
+}))
 
 app.use(express.static('website'));
 
-app.use(session({
-  cookieName: 'session',
-  secret: 'complaintsmadeeasy',
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
-}));
-
-app.post('/MakeComplaint', function (req, res) {
- //TODO  
+app.post('/MakeComplaint', function(req, res) {
+    if (!req.session.user) {
+        res.send({
+            "success": false,
+            "message": "User not logged in"
+        });
+    } else {
+        var ss = new SuzeService();
+        ss.MakeComplaint(req.body, function(response) {
+            if (response.success) {
+                res.send({
+                    "success": true,
+                    "message": ""
+                });
+            } else {
+        		res.send({
+                    "success": false,
+                    "message": "Issue with the service request: " + response.message
+                });
+            }
+        });
+    }
 });
 
 app.post('/login', function(req, res) {
-  User.findOne({ email: req.body.email }, function(err, user) {
-    if (!user) {
-        req.session.reset();
-        //return login failure.
-    } else {
-      if (req.body.password === user.password) {
+    var ss = new SuzeService();
+
+    ss.GetAccountByEmail(req.body.email, function(response) {
+        if (response.success)
+            user = response.account;
+    });
+
+    if (user) {
         req.session.user = user;
-        //return logged in success and session token.
-          res.locals.user = user;
-      } else {
-          req.session.reset();
-        //return login failure .
-      }
     }
-  });
+
+    res.send(user);
 });
 
-
 app.post('/register', function(req, res) {
- //TODO  
+    var ss = new SuzeService();
+
+    ss.Register(req.body, function(response) {
+        res.send(response);
+    });
 });
 
 app.get('/test', function(req, res) {
-	var ss = new SuzeService();
-        
-    ss.GetAccountByEmail("test@testington.com", function(response){
-        console.log("Main.js: got response from SS:");      
+    var ss = new SuzeService();
+
+    ss.GetAccountByEmail("test@testington.com", function(response) {
+        console.log("Main.js: got response from SS:");
         console.log(response);
     });
 });
 
 app.post('/logout', function(req, res) {
- req.session.reset(); 
+    req.session.destroy();
 });
 
-var server = app.listen(4000, function () {
-	var host = "localhost"
-	var port = server.address().port;
-});
 
+var server = app.listen(port, function() {
+    console.log('Listening on port ' + port + '.');
+});
