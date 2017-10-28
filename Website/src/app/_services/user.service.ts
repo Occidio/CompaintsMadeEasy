@@ -13,14 +13,4 @@ export class UserService {
 
         return this.http.post('http://localhost:4000/register', user, options).map((response: Response) => response.json());
     }
-
-    // private helper methods
-    private jwt() {
-        // create authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
-    }
 }
