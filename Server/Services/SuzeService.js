@@ -76,12 +76,7 @@ method.AddAccount = function (account, callback) {
     query += ", @firstName='" + account.firstname + "'";
     query += ", @surname='" + account.surname + "'";
     query += ", @mobilePhone='" + account.mobilephone + "'";
-    query += ", @homePhone='" + account.homephone + "'";
-    query += ", @houseNameNumber='" + account.houseNameNumber + "'";
-    query += ", @street='" + account.street + "'";
-    query += ", @city='" + account.city + "'";
-    query += ", @county ='" + account.county + "'";
-    query += ", @postcode ='" + account.postcode + "'";
+    query += ", @password='" + account.password + "'";
 
     executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {

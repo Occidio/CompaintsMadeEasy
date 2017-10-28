@@ -68,7 +68,17 @@ app.post('/login', function(req, res) {
 app.post('/register', function(req, res) {
     var ss = new SuzeService();
 
-    ss.Register(req.body, function(response) {
+    var account = new Account(
+    	0,
+	    req.body.password,
+	    req.body.title,
+	    req.body.firstname,
+	    req.body.surname,
+	    req.body.email,
+	    req.body.mobilenumber
+    );
+
+    ss.AddAccount(account, function(response) {
         res.send(response);
     });
 });
