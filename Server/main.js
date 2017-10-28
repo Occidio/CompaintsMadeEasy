@@ -69,13 +69,13 @@ app.post('/register', function(req, res) {
     var ss = new SuzeService();
 
     var account = new Account(
-    	0,
-	    req.body.password,
-	    req.body.title,
-	    req.body.firstname,
-	    req.body.surname,
-	    req.body.email,
-	    req.body.mobilenumber
+        0,
+        req.body.password,
+        req.body.title,
+        req.body.firstname,
+        req.body.surname,
+        req.body.email,
+        req.body.mobilenumber
     );
 
     ss.AddAccount(account, function(response) {
@@ -95,6 +95,11 @@ app.get('/test', function(req, res) {
 
 app.post('/logout', function(req, res) {
     req.session.destroy();
+    res.send({
+        "success": true,
+        "message": ""
+    });
+
 });
 
 
