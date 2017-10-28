@@ -17,13 +17,13 @@ function SuzeService() {
 
 //ACCOUNT
 
-method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
+method.GetAccountByEmailAndPassword = function(emailAddress, password, callback) {
 
     var query = "EXEC getAccountByEmail";
     query += " @email='" + emailAddress + "'";
     query += ", @password='" + password + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
 
         if (!dbResponse.success) {
             callback({
@@ -63,12 +63,12 @@ method.GetAccountByEmailAndPassword = function (emailAddress, password, callback
     });
 };
 
-method.GetAccountByAccountId = function (accountId, callback) {
+method.GetAccountByAccountId = function(accountId, callback) {
 
     var query = "EXEC getAccountByEmail";
     query += " @accountId='" + accountId + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
 
         if (!dbResponse.success) {
             callback({
@@ -108,7 +108,7 @@ method.GetAccountByAccountId = function (accountId, callback) {
     });
 };
 
-method.AddAccount = function (account, callback) {
+method.AddAccount = function(account, callback) {
 
     var query = "EXEC addAccount";
     query += " @email='" + account.email + "'";
@@ -118,7 +118,7 @@ method.AddAccount = function (account, callback) {
     query += ", @mobilePhone='" + account.mobilePhone + "'";
     query += ", @password='" + account.password + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -134,20 +134,20 @@ method.AddAccount = function (account, callback) {
 
 //COMPANY
 
-method.GetCompanyByName = function (companyName, callback){
+method.GetCompanyByName = function(companyName, callback) {
     var query = "EXEC getCompanySearch";
     query += " @companyName  ='" + companyName + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
                 "response": "Error returned from DB."
             });
         }
-        
+
         var responseSet = dbResponse.response.recordset[0];
-        
+
         callback({
             "success": true,
             "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
@@ -157,14 +157,14 @@ method.GetCompanyByName = function (companyName, callback){
 
 //COMPLAINT
 
-method.AddComplaint = function (complaint, callback) {
+method.AddComplaint = function(complaint, callback) {
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
     query += ", @companyId='" + complaint.companyId + "'";
     query += ", @complaintReason ='" + complaint.reason + "'";
     query += ", @complaintDetails ='" + complaint.details + "'";
 
-    executeQuery(query, function (dbResponse) {
+    executeQuery(query, function(dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -178,31 +178,35 @@ method.AddComplaint = function (complaint, callback) {
 };
 
 function executeQuery(query, callback) {
-    sql.connect(dbConfig, function (err) {
+    sql.connect(dbConfig, function(err) {
         if (err) {
             console.log("SS : Error connecting to DB");
             console.log(err);
 
+            sql.close();
             callback({
                 "success": false
             });
-        }
+        } else {
+            var request = new sql.Request();
+            request.query(query, function(err, recordset) {
+                if (err) {
+                    console.log("SS : Error executing query on DB");
+                    console.log(err);
 
-        var request = new sql.Request();
-        request.query(query, function (err, recordset) {
-            if (err) {
-                console.log("SS : Error executing query on DB");
-                console.log(err);
-                callback({
-                    "success": false
-                });
-            }
-            callback({
-                "success": true,
-                "response": recordset
+                    sql.close();
+                    callback({
+                        "success": false
+                    });
+                } else {
+                    sql.close();
+                    callback({
+                        "success": true,
+                        "response": recordset
+                    });
+                }
             });
-            sql.close();
-        });
+        }
     });
 };
 

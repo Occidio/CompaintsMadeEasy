@@ -68,21 +68,38 @@ app.post('/login', function(req, res) {
 app.post('/register', function(req, res) {
     var ss = new SuzeService();
 
-    var account = new Account(
-        0,
-        req.body.password,
-        req.body.title,
-        req.body.firstName,
-        req.body.surname,
-        req.body.email,
-        req.body.mobilePhone
-    );
+    ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
+        if (response.success) {
+            res.send({
+                "success": false,
+                "message": "Account already exists."
+            });
+        } else {
+            var account = new Account(
+                0,
+                req.body.password,
+                req.body.title,
+                req.body.firstName,
+                req.body.surname,
+                req.body.email,
+                req.body.mobilePhone
+            );
 
-    ss.AddAccount(account, function(response) {
-        res.send({
-            "success": true,
-            "message": response
-        });
+        	var ss2 = new SuzeService();
+            ss2.AddAccount(account, function(response) {
+                if (response.success) {
+                    res.send({
+                        "success": true,
+                        "message": ""
+                    });
+                } else {
+                    res.send({
+                        "success": false,
+                        "message": "Issue with the service request: " + response.response
+                    });
+                }
+            });
+        }
     });
 });
 
