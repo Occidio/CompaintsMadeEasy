@@ -49,7 +49,7 @@ app.post('/login', function(req, res) {
         if (response.success)
             user = response.account;
 
-        if (user) {
+        if (typeof something === "undefined") {
             req.session.user = user;
         }
 
