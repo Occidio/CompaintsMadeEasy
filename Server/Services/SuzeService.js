@@ -65,7 +65,7 @@ method.GetAccountByEmailAndPassword = function(emailAddress, password, callback)
 
 method.GetAccountByAccountId = function(accountId, callback) {
 
-    var query = "EXEC getAccountByEmail";
+    var query = "EXEC getAccountByAccountId";
     query += " @accountId='" + accountId + "'";
 
     executeQuery(query, function(dbResponse) {

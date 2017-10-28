@@ -1,4 +1,5 @@
 var SuzeService = require('./Services/SuzeService');
+var SMSService = require('./Services/SMSService');
 var Account = require('./Objects/Account');
 var Company = require('./Objects/Company');
 
@@ -111,6 +112,13 @@ app.get('/test', function(req, res) {
         console.log(response);
         res.send("done");
     });
+});
+
+app.post('/testSMS', function(req, res) {
+    var ss = new SMSService();
+
+    ss.SendSMS(req.body.message, req.body.accountId);
+    res.send("done");
 });
 
 app.post('/logout', function(req, res) {
