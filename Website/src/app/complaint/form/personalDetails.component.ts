@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import 'scroll.js';
 
 @Component({
     selector: 'personalDetails-component',
@@ -8,5 +9,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 
 export class PersonalDetailsComponent {
-
+    
 }
