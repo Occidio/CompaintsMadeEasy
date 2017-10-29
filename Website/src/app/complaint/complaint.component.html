@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row spinner">
     <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label for="complaint">Complaint</label>
