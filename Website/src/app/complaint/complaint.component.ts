@@ -58,7 +58,7 @@ export class ComplaintComponent {
             .subscribe(
             data => {
                 this.alertService.success('Complaint made', true);
-                this.router.navigate(['/']);
+                this.router.navigate(['/success']);
             },
             error => {
                 this.alertService.error(error);

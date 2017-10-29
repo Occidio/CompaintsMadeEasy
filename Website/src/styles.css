@@ -12,11 +12,6 @@
     100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
 }
 
-.has-error{
-    color: red;
-    border-color: red;
-}
-
 .nice .jumbotron{
     background-color: transparent;
 }
@@ -205,3 +200,8 @@ body{
   left:0!important;
   top: 1px!important;
 }
+
+.has-error{
+    color: red;
+    border-color: red;
+}   
