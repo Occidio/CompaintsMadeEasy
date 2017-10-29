@@ -14,7 +14,7 @@ export class ComplaintComponent {
     currentUser: User;
     model: any = {};
     loading = false;
-    CompanyId:number;
+    companyId:number;
     marketingInfo: boolean = false;
     isMarketingInfoHidden: boolean = true;
 
@@ -52,7 +52,7 @@ export class ComplaintComponent {
         complaintDetails.reason = this.model.complaint;
         var complaint = new Complaint();
         complaint.accountId = this.currentUser.accountId;
-        complaint.companyId = 1;
+        complaint.companyId = this.companyId;
         complaint.details = complaintDetails;
         this.complaintService.makeComplaint(complaint)
             .subscribe(
@@ -93,5 +93,9 @@ export class ComplaintComponent {
                 },error=>{
                     console.log(error);
                 });
+    }
+
+    selectCompany(companyId: number){
+        this.companyId = companyId;
     }
 }
