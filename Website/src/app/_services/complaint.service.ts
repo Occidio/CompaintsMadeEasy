@@ -14,4 +14,14 @@ export class ComplaintService {
         return this.http.post('http://localhost:4000/makeComplaint', complaint, options)
         	.map((response: Response) => response.json());
     }
+    
+    uploadLogo(logoURL:string){
+        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded', "apikey":"4bd4faa28188957" });
+        let options = new RequestOptions({ headers: headers });
+        
+        let request = "url="+logoURL+"&isOverlayRequired=true";
+
+        return this.http.post('https://api.ocr.space/parse/image', request, options)
+        	.map((response: Response) => response.json());
+    }
 }

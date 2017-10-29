@@ -15,6 +15,7 @@ export class ComplaintComponent {
     model: any = {};
     loading = false;
     marketingInfo: boolean;
+    CompanyId:number;
 
     constructor(
         private router: Router,
@@ -53,6 +54,27 @@ export class ComplaintComponent {
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
+                });
+    }
+    
+    uploadLogo(){
+        let url = this.model.logoUrl;
+        
+        this.complaintService.uploadLogo(url)
+            .subscribe(
+                data=>{
+                    console.log(data);
+                    if(!data.IsErroredOnProcessing){
+
+                        let lines = data.ParsedResults[0].TextOverlay.Lines;
+
+                        lines.forEach(function(element){
+                            this.model.words.push(element.Words[0].WordText);
+                        });
+
+                    }
+                },error=>{
+                    console.log(error);
                 });
     }
 }
