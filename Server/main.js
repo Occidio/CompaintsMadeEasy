@@ -78,7 +78,7 @@ var MessageParser = function(str, callback) {
 
     words.forEach(function(element, index) {
         if (element === "") {
-            validWords.push(words[index + 1].replace(/[^a-z]/g, ""))
+            validWords.push(words[index + 1].replace(/[^a-zA-Z]/g, ""))
         }
     });
 

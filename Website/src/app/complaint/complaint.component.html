@@ -41,7 +41,7 @@
             </div>
             <div *ngFor="let company of model.companies" >
                 <label>{{company.companyName}}</label>
-                <input type=radio name="company" value="{{company.companyId}}" (click)="selectCompany(company.companyId)"/>
+                <input type=radio name="company" value="{{company.companyId}}" (click)="selectCompany(company.companyId)" required/>
             </div>
         </div>
         <marketingInfo-component (onUpdate)="updateMarketingInfo($event)"></marketingInfo-component>
