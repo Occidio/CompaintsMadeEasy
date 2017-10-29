@@ -40,6 +40,7 @@ export class ComplaintComponent {
     makeComplaint(){
         var complaintDetails = new ComplaintDetails();
         complaintDetails.marketingInfo = this.marketingInfo;
+        complaintDetails.reason = this.model.complaint;
         var complaint = new Complaint();
         complaint.accountId = this.currentUser.accountId;
         complaint.companyId = 1;
