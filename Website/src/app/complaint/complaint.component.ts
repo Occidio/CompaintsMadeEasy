@@ -15,6 +15,7 @@ export class ComplaintComponent {
     model: any = {};
     loading = false;
     marketingInfo: boolean;
+    CompanyId:number;
 
     constructor(
         private router: Router,
@@ -53,5 +54,9 @@ export class ComplaintComponent {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+    
+    uploadLogo(){
+        var url = this.model.logoUrl;
     }
 }
