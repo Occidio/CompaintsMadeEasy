@@ -1,9 +1,8 @@
 var method = Complaint.prototype;
 
-function Complaint(accountId, companyId, reason, details) {
+function Complaint(accountId, companyId, details) {
     this.accountId = accountId;
     this.companyId = companyId;
-    this.reason = reason;
     this.details = details;
 };
 

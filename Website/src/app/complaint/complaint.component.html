@@ -1,5 +1,5 @@
 <div class="row">
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+    <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label for="complaint">Complaint</label>
             <textarea class="form-control" rows="3" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>

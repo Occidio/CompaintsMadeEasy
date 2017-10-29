@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from '../_models/index';
-import { UserService } from '../_services/index';
+import { UserService, ComplaintService, AlertService } from '../_services/index';
 
 @Component({
     selector: 'complaint-component',
@@ -14,7 +15,11 @@ export class ComplaintComponent {
     model: any = {};
     loading = false;
 
-    constructor(private userService: UserService) {
+    constructor(
+        private router: Router,
+        private alertService: AlertService,
+        private complaintService: ComplaintService,
+        private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
@@ -24,5 +29,18 @@ export class ComplaintComponent {
 
     continue(){
         // some shit here
+    }
+
+    makeComplaint(user){
+        this.complaintService.makeComplaint(user)
+            .subscribe(
+                data => {
+                    this.alertService.success('Complaint made', true);
+                    this.router.navigate(['/']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 }

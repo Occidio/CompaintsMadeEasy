@@ -56,7 +56,7 @@ var SendSms = function (complaint) {
     if (complaint.details.marketingInfo) {
         ss.GetPoliceNumberByAccountId(complaint.accountId, function (response) {
             if (response.success) {
-                MessageParser(complaint.reason, function (message) {
+                MessageParser(complaint.details.reason, function (message) {
                     if (message == "") {
                         SendGenericSms(complaint);
                     } else {
