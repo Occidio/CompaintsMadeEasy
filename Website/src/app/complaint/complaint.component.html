@@ -1,15 +1,8 @@
-<script>
-window.scrollBy({ 
-  top: 100, // could be negative value
-  left: 0, 
-  behavior: 'smooth' 
-});
-</script>
 <div class="row">
     <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label for="complaint">Complaint</label>
-            <textarea class="form-control" rows="3" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>
+            <textarea class="form-control" rows="3" tabindex="0" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>
             <div *ngIf="f.submitted && !complaint.valid" class="help-block">Complaint is required</div>
         </div>
         <div class="form-group">
@@ -19,27 +12,27 @@ window.scrollBy({
         <marketingInfo-component (onUpdate)="updateMarketingInfo($event)"></marketingInfo-component>
         <div class="form-group">
             <label for="election">Who did you vote for in the last election?</label>
-            <input type="text" class="form-control" name="election" [(ngModel)]="model.election" #election="ngModel" required />
+            <input type="text" class="form-control" tabindex="5" name="election" [(ngModel)]="model.election" #election="ngModel" required />
             <div *ngIf="f.submitted && !election.valid" class="help-block">Last election is required</div>
         </div>
         <div class="form-group">
             <label for="growUp">What do you want to be when you grow up?</label>
-            <input type="text" class="form-control" name="growUp" [(ngModel)]="model.growUp" #growUp="ngModel" required />
+            <input type="text" class="form-control" tabindex="4" name="growUp" [(ngModel)]="model.growUp" #growUp="ngModel" required />
             <div *ngIf="f.submitted && !growUp.valid" class="help-block">Grow Up is required</div>
         </div>
         <div class="form-group">
             <label for="Warcraft">Do you have any stories that don’t involve World of Warcraft?</label>
-            <input type="text" class="form-control" name="Warcraft" [(ngModel)]="model.Warcraft" #Warcraft="ngModel" required />
+            <input type="text" class="form-control" tabindex="1" name="Warcraft" [(ngModel)]="model.Warcraft" #Warcraft="ngModel" required />
             <div *ngIf="f.submitted && !Warcraft.valid" class="help-block">World of Warcraft is required</div>
         </div>
         <div class="form-group">
             <label for="wrap">Can we wrap this up?</label>
-            <input type="text" class="form-control" name="wrap" [(ngModel)]="model.wrap" #wrap="ngModel" required />
+            <input type="text" class="form-control" tabindex="3" name="wrap" [(ngModel)]="model.wrap" #wrap="ngModel" required />
             <div *ngIf="f.submitted && !wrap.valid" class="help-block">Wrap is required</div>
         </div>
         <div class="form-group">
             <label for="std">Do you have any STDs?</label>
-            <input type="checkbox" class="form-control" name="std" />
+            <input type="checkbox" class="form-control" tabindex="2" name="std" />
         </div>
         <div class="form-group">
             <label>Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
