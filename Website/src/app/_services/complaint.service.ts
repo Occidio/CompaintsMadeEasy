@@ -24,4 +24,14 @@ export class ComplaintService {
         return this.http.post('https://api.ocr.space/parse/image', request, options)
         	.map((response: Response) => response.json());
     }
+    
+    companySearch(companyName:string){
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        
+        let request = {"companyName": companyName};
+
+        return this.http.post('http://localhost:4000/companySearch', request, options)
+        	.map((response: Response) => response.json());
+    }
 }

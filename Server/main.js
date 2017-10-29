@@ -88,7 +88,6 @@ var MessageParser = function(str, callback) {
 app.post('/login', function(req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     var ss = new SuzeService();
-    console.log(req)
     ss.GetAccountByEmailAndPassword(req.body.email, req.body.password, function(response) {
         if (response.success) {
             res.send({
@@ -142,21 +141,13 @@ app.post('/register', function(req, res) {
     });
 });
 
-app.get('/test', function(req, res) {
+
+app.post('/companySearch', function(req, res) {
     var ss = new SuzeService();
 
-    ss.GetAccountByEmail("test@testington.com", function(response) {
-        console.log("Main.js: got response from SS:");
-        console.log(response);
-        res.send("done");
+    ss.GetCompanyByName(req.body.companyName, function(companies){      
+        res.send(companies);
     });
-});
-
-app.post('/testSMS', function(req, res) {
-    var ss = new SMSService();
-
-    ss.SendSMS(req.body.message, req.body.accountId);
-    res.send("done");
 });
 
 var server = app.listen(port, function() {

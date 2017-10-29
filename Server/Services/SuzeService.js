@@ -143,7 +143,7 @@ method.AddAccount = function (account, callback) {
 
 method.GetCompanyByName = function (companyName, callback) {
     var query = "EXEC getCompanySearch";
-    query += " @companyName  ='" + companyName + "'";
+    query += " @searchTerm  ='" + companyName + "'";
 
     executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
@@ -152,11 +152,17 @@ method.GetCompanyByName = function (companyName, callback) {
                 "response": "Error returned from DB."
             });
         } else {
-            var responseSet = dbResponse.response.recordset[0];
-
+            let recordset = dbResponse.response.recordset;
+            
+            let companies = [];
+            
+            recordset.forEach(function(element){
+                companies.push(new Company(element.COMPANY_ID, element.COMPANY_NAME));
+            });
+            
             callback({
                 "success": true,
-                "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
+                "response": companies
             });
         }
     });

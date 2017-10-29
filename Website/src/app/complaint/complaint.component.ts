@@ -81,4 +81,17 @@ export class ComplaintComponent {
                     console.log(error);
                 });
     }
+    
+    companySearch(companyName:string){        
+        this.complaintService.companySearch(companyName)
+            .subscribe(
+                data=>{
+                    console.log(data); 
+                    if(data.success){
+                        this.model.companies = data.response;
+                    }
+                },error=>{
+                    console.log(error);
+                });
+    }
 }
