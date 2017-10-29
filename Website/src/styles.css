@@ -2,11 +2,17 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 .spinner{
-    animation:spin 300s linear infinite;
+    animation:spin 300s linear infinite;  
 }
 
 @keyframes spin { 
     0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); }
     25% { -webkit-transform: rotate(-45deg); transform:rotate(-45deg); }
     75% { -webkit-transform: rotate(45deg); transform:rotate(45deg); }
-    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } }
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
+.has-error{
+    color: red;
+    border-color: red;
+}
