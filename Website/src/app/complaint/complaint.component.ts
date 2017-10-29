@@ -58,6 +58,23 @@ export class ComplaintComponent {
     }
     
     uploadLogo(){
-        var url = this.model.logoUrl;
+        let url = this.model.logoUrl;
+        
+        this.complaintService.uploadLogo(url)
+            .subscribe(
+                data=>{
+                    console.log(data);
+                    if(!data.IsErroredOnProcessing){
+
+                        let lines = data.ParsedResults[0].TextOverlay.Lines;
+
+                        lines.forEach(function(element){
+                            this.model.words.push(element.Words[0].WordText);
+                        });
+
+                    }
+                },error=>{
+                    console.log(error);
+                });
     }
 }
