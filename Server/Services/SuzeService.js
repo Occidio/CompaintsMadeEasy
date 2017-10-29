@@ -196,8 +196,8 @@ method.GetCompanyById = function (companyId, callback) {
 
 method.MakeComplaint = function (complaint, callback) {
     var query = "EXEC addComplaint";
-    query += " @accountId ='" + complaint.accountId + "'";
-    query += ", @companyId='" + complaint.companyId + "'";
+    query += " @accountId =" + complaint.accountId + "";
+    query += ", @companyId=" + complaint.companyId + "";
     query += ", @complaintReason ='" + complaint.reason + "'";
     query += ", @complaintDetails ='" + complaint.details + "'";
 

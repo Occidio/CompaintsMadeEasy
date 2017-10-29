@@ -36,7 +36,7 @@
             <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
             
             <div class="mt-1">
-                <label *ngIf="model.words.length!=0">Please select a company name from the ones below, if there is not an appropriate option please enter a new logo.</label>
+                <label *ngIf="model.words && model.words.length!=0">Please select a company name from the ones below, if there is not an appropriate option please enter a new logo.</label>
                 <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch(word)">{{word}}</button>
             </div>
             
