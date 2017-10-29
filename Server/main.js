@@ -50,7 +50,6 @@ app.post('/MakeComplaint', function (req, res) {
 });
 
 var SendSms = function (complaint) {
-    console.log("Sending SMS..");
     var smsService = new SMSService();
     var ss = new SuzeService();
 
@@ -61,7 +60,7 @@ var SendSms = function (complaint) {
                     if (message == "") {
                         SendGenericSms(complaint);
                     } else {
-                        smsService.SendSMS(message, response.PHONE);
+                        smsService.SendDirectSMS(message, response.response.PHONE);
                     }
                 });
             } else {
@@ -75,7 +74,6 @@ var SendSms = function (complaint) {
 
 var SendGenericSms = function (complaint) {
     var ss = new SuzeService();
-    console.log("Sending Generic SMS..");
     ss.GetCompanyById(complaint.companyId, function (response) {
         if (response.success) {
             smsService.SendSMS("Your complaint against "+response.response.companyName + " has been created.", complaint.accountId);          

@@ -22,13 +22,13 @@ function SuzeService() {
 
 //ACCOUNT
 
-method.GetAccountByEmailAndPassword = function(emailAddress, password, callback) {
+method.GetAccountByEmailAndPassword = function (emailAddress, password, callback) {
 
     var query = "EXEC getAccountByEmail";
     query += " @email='" + emailAddress + "'";
     query += ", @password='" + password + "'";
 
-    executeQuery(query, function(dbResponse) {
+    executeQuery(query, function (dbResponse) {
 
         if (!dbResponse.success) {
             callback({
@@ -68,12 +68,14 @@ method.GetAccountByEmailAndPassword = function(emailAddress, password, callback)
     });
 };
 
-method.GetAccountByAccountId = function(accountId, callback) {
+method.GetAccountByAccountId = function (accountId, callback) {
 
     var query = "EXEC getAccountByAccountId";
-    query += " @accountId='" + accountId + "'";
+    query += " @accountId=" + accountId;
 
-    executeQuery(query, function(dbResponse) {
+    console.log(query)
+    
+    executeQuery(query, function (dbResponse) {
 
         if (!dbResponse.success) {
             callback({
@@ -113,7 +115,7 @@ method.GetAccountByAccountId = function(accountId, callback) {
     });
 };
 
-method.AddAccount = function(account, callback) {
+method.AddAccount = function (account, callback) {
 
     var query = "EXEC addAccount";
     query += " @email='" + account.email + "'";
@@ -123,7 +125,7 @@ method.AddAccount = function(account, callback) {
     query += ", @mobilePhone='" + account.mobilePhone + "'";
     query += ", @password='" + account.password + "'";
 
-    executeQuery(query, function(dbResponse) {
+    executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -139,28 +141,24 @@ method.AddAccount = function(account, callback) {
 
 //COMPANY
 
-<<<<<<< HEAD
 method.GetCompanyByName = function (companyName, callback) {
-=======
-method.GetCompanyByName = function(companyName, callback) {
->>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
     var query = "EXEC getCompanySearch";
     query += " @companyName  ='" + companyName + "'";
 
-    executeQuery(query, function(dbResponse) {
+    executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
                 "response": "Error returned from DB."
             });
+        } else {
+            var responseSet = dbResponse.response.recordset[0];
+
+            callback({
+                "success": true,
+                "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
+            });
         }
-
-        var responseSet = dbResponse.response.recordset[0];
-
-        callback({
-            "success": true,
-            "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
-        });
     });
 };
 
@@ -190,18 +188,14 @@ method.GetCompanyById = function (companyId, callback) {
 
 //COMPLAINT
 
-<<<<<<< HEAD
 method.MakeComplaint = function (complaint, callback) {
-=======
-method.AddComplaint = function(complaint, callback) {
->>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
     query += ", @companyId='" + complaint.companyId + "'";
     query += ", @complaintReason ='" + complaint.reason + "'";
     query += ", @complaintDetails ='" + complaint.details + "'";
 
-    executeQuery(query, function(dbResponse) {
+    executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
             callback({
                 "success": false,
@@ -218,8 +212,10 @@ method.AddComplaint = function(complaint, callback) {
 //POLICE
 
 method.GetPoliceNumberByAccountId = function (accountId, callback) {
+    
+    console.log(accountId);
     var query = "EXEC getPoliceByAccountId";
-    query += " @accountId  ='" + accountId + "'";
+    query += " @accountId  =" + accountId + "";
 
     executeQuery(query, function (dbResponse) {
         if (!dbResponse.success) {
@@ -228,7 +224,7 @@ method.GetPoliceNumberByAccountId = function (accountId, callback) {
                 "response": "Error returned from DB."
             });
         }
-
+        
         var responseSet = dbResponse.response.recordset;
 
         if (responseSet.length != 1) {
@@ -247,11 +243,7 @@ method.GetPoliceNumberByAccountId = function (accountId, callback) {
 };
 
 function executeQuery(query, callback) {
-<<<<<<< HEAD
- const pool = new sql.ConnectionPool(dbConfig).connect(function (err) {
-=======
-    sql.connect(dbConfig, function(err) {
->>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
+    const pool = new sql.ConnectionPool(dbConfig).connect(function (err) {
         if (err) {
             console.log("SS : Error connecting to DB");
             console.log(err);
@@ -260,7 +252,6 @@ function executeQuery(query, callback) {
             callback({
                 "success": false
             });
-<<<<<<< HEAD
         }
 
         var request = new sql.Request(pool);
@@ -271,32 +262,13 @@ function executeQuery(query, callback) {
                 callback({
                     "success": false
                 });
+            } else {
+                callback({
+                    "success": true,
+                    "response": recordset
+                });
             }
-            callback({
-                "success": true,
-                "response": recordset
-=======
-        } else {
-            var request = new sql.Request();
-            request.query(query, function(err, recordset) {
-                if (err) {
-                    console.log("SS : Error executing query on DB");
-                    console.log(err);
-
-                    sql.close();
-                    callback({
-                        "success": false
-                    });
-                } else {
-                    sql.close();
-                    callback({
-                        "success": true,
-                        "response": recordset
-                    });
-                }
->>>>>>> 925fc43fc88e9b68a9ac78bc0d4c6251b7222a71
-            });
-        }
+        });
     });
 };
 
