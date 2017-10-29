@@ -1,0 +1,5 @@
+<div class="form-group">
+    <label for="election">Who did you vote for in the last election?</label>
+    <input type="text" class="form-control" name="election" [(ngModel)]="model.election" #election="ngModel" required />
+    <div *ngIf="f.submitted && !election.valid" class="help-block">Last election is required</div>
+</div>

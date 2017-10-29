@@ -12,7 +12,7 @@ import { AlertService, AuthenticationService, UserService, ComplaintService } fr
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
-import { ComplaintComponent, MarketingInfoComponent } from './complaint/index';
+import { ComplaintComponent, MarketingInfoComponent, PersonalDetailsComponent } from './complaint/index';
 
 @NgModule({
     imports: [
@@ -28,7 +28,8 @@ import { ComplaintComponent, MarketingInfoComponent } from './complaint/index';
         LoginComponent,
         RegisterComponent,
         ComplaintComponent,
-        MarketingInfoComponent
+        MarketingInfoComponent,
+        PersonalDetailsComponent
     ],
     providers: [
         AuthGuard,

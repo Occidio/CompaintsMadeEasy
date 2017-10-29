@@ -1,5 +1,5 @@
 <div class="row">
-    <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate>
+    <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label for="complaint">Complaint</label>
             <textarea class="form-control" rows="3" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>
@@ -10,6 +10,30 @@
             <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
         <marketingInfo-component (onUpdate)="updateMarketingInfo($event)"></marketingInfo-component>
+        <div class="form-group">
+            <label for="election">Who did you vote for in the last election?</label>
+            <input type="text" class="form-control" name="election" [(ngModel)]="model.election" #election="ngModel" required />
+            <div *ngIf="f.submitted && !election.valid" class="help-block">Last election is required</div>
+        </div>
+        <div class="form-group">
+            <label for="growUp">What do you want to be when you grow up?</label>
+            <input type="text" class="form-control" name="growUp" [(ngModel)]="model.growUp" #growUp="ngModel" required />
+            <div *ngIf="f.submitted && !growUp.valid" class="help-block">Grow Up is required</div>
+        </div>
+        <div class="form-group">
+            <label for="Warcraft">Do you have any stories that don’t involve World of Warcraft?</label>
+            <input type="text" class="form-control" name="Warcraft" [(ngModel)]="model.Warcraft" #Warcraft="ngModel" required />
+            <div *ngIf="f.submitted && !Warcraft.valid" class="help-block">World of Warcraft is required</div>
+        </div>
+        <div class="form-group">
+            <label for="wrap">Can we wrap this up?</label>
+            <input type="text" class="form-control" name="wrap" [(ngModel)]="model.wrap" #wrap="ngModel" required />
+            <div *ngIf="f.submitted && !wrap.valid" class="help-block">Wrap is required</div>
+        </div>
+        <div class="form-group">
+            <label for="std">Do you have any STDs?</label>
+            <input type="checkbox" class="form-control" name="std" />
+        </div>
     </form>
     
 </div>
