@@ -7,15 +7,15 @@ function SMSService() {
 
 };
 
-SMSService.prototype.SendSMS = function(message, accountId) {
+SMSService.prototype.SendSMS = function (message, accountId) {
     var ss = new SuzeService();
 
-    ss.GetAccountByAccountId(accountId, function(response) {
+    ss.GetAccountByAccountId(accountId, function (response) {
         if (response.success) {
             clockwork.sendSms({
                 To: response.response.mobilePhone,
                 Content: message
-            }, function(error, resp) {
+            }, function (error, resp) {
                 if (error) {
                     console.log('Could not send SMS: ' + error);
                 } else {
@@ -30,6 +30,23 @@ SMSService.prototype.SendSMS = function(message, accountId) {
             };
         }
     })
+};
+
+SMSService.prototype.SendDirectSMS = function (message, number) {
+    console.log(message);
+        console.log(number);
+
+    clockwork.sendSms({
+        To: number,
+        Content: message
+    }, function (error, resp) {
+        if (error) {
+            console.log('Could not send SMS: ' + error);
+        } else {
+            console.log('SMS sent to', resp.responses[0].to);
+            console.log('MessageID was', resp.responses[0].id);
+        }
+    });
 };
 
 module.exports = SMSService;

@@ -6,7 +6,12 @@ var dbConfig = {
     server: 'ec2-52-211-119-222.eu-west-1.compute.amazonaws.com',
     database: 'MPP_TEAM_CME',
     user: 'MPP2',
-    password: 'm]Hvz`:(p?N2Ct47'
+    password: 'm]Hvz`:(p?N2Ct47',
+    pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+    }
 };
 
 var method = SuzeService.prototype;
@@ -65,9 +70,11 @@ method.GetAccountByEmailAndPassword = function (emailAddress, password, callback
 
 method.GetAccountByAccountId = function (accountId, callback) {
 
-    var query = "EXEC getAccountByEmail";
-    query += " @accountId='" + accountId + "'";
+    var query = "EXEC getAccountByAccountId";
+    query += " @accountId=" + accountId;
 
+    console.log(query)
+    
     executeQuery(query, function (dbResponse) {
 
         if (!dbResponse.success) {
@@ -134,7 +141,7 @@ method.AddAccount = function (account, callback) {
 
 //COMPANY
 
-method.GetCompanyByName = function (companyName, callback){
+method.GetCompanyByName = function (companyName, callback) {
     var query = "EXEC getCompanySearch";
     query += " @companyName  ='" + companyName + "'";
 
@@ -144,20 +151,44 @@ method.GetCompanyByName = function (companyName, callback){
                 "success": false,
                 "response": "Error returned from DB."
             });
+        } else {
+            var responseSet = dbResponse.response.recordset[0];
+
+            callback({
+                "success": true,
+                "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
+            });
         }
-        
-        var responseSet = dbResponse.response.recordset[0];
-        
-        callback({
-            "success": true,
-            "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
-        });
+    });
+};
+
+
+method.GetCompanyById = function (companyId, callback) {
+    var query = "EXEC getCompanyById";
+    query += " @companyId  ='" + companyId + "'";
+
+    executeQuery(query, function (dbResponse) {
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        } else {
+
+            var responseSet = dbResponse.response.recordset[0];
+
+            callback({
+                "success": true,
+                "response": new Company(responseSet.COMPANYID, responseSet.COMPANY_NAME)
+            });
+        }
+
     });
 };
 
 //COMPLAINT
 
-method.AddComplaint = function (complaint, callback) {
+method.MakeComplaint = function (complaint, callback) {
     var query = "EXEC addComplaint";
     query += " @accountId ='" + complaint.accountId + "'";
     query += ", @companyId='" + complaint.companyId + "'";
@@ -170,25 +201,60 @@ method.AddComplaint = function (complaint, callback) {
                 "success": false,
                 "response": "Error returned from DB."
             });
+        } else {
+            callback({
+                "success": true
+            });
         }
-        callback({
-            "success": true
-        });
+    });
+};
+
+//POLICE
+
+method.GetPoliceNumberByAccountId = function (accountId, callback) {
+    
+    console.log(accountId);
+    var query = "EXEC getPoliceByAccountId";
+    query += " @accountId  =" + accountId + "";
+
+    executeQuery(query, function (dbResponse) {
+        if (!dbResponse.success) {
+            callback({
+                "success": false,
+                "response": "Error returned from DB."
+            });
+        }
+        
+        var responseSet = dbResponse.response.recordset;
+
+        if (responseSet.length != 1) {
+            callback({
+                "success": false,
+                "response": "No phone number found."
+            });
+        } else {
+            callback({
+                "success": true,
+                "response": responseSet[0]
+            });
+        }
+
     });
 };
 
 function executeQuery(query, callback) {
-    sql.connect(dbConfig, function (err) {
+    const pool = new sql.ConnectionPool(dbConfig).connect(function (err) {
         if (err) {
             console.log("SS : Error connecting to DB");
             console.log(err);
 
+            sql.close();
             callback({
                 "success": false
             });
         }
 
-        var request = new sql.Request();
+        var request = new sql.Request(pool);
         request.query(query, function (err, recordset) {
             if (err) {
                 console.log("SS : Error executing query on DB");
@@ -196,12 +262,12 @@ function executeQuery(query, callback) {
                 callback({
                     "success": false
                 });
+            } else {
+                callback({
+                    "success": true,
+                    "response": recordset
+                });
             }
-            callback({
-                "success": true,
-                "response": recordset
-            });
-            sql.close();
         });
     });
 };
