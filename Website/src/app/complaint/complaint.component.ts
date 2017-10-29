@@ -14,8 +14,9 @@ export class ComplaintComponent {
     currentUser: User;
     model: any = {};
     loading = false;
-    marketingInfo: boolean;
     CompanyId:number;
+    marketingInfo: boolean = false;
+    isMarketingInfoHidden: boolean = true;
 
     constructor(
         private router: Router,
@@ -29,15 +30,23 @@ export class ComplaintComponent {
         //this.loadAllUsers();
     }
 
-    continue(){
+    continue() {
         // some shit here
     }
 
-    public updateMarketingInfo(marketingInfo: any):void {
+    public updateMarketingInfo(marketingInfo: any): void {
         this.marketingInfo = marketingInfo;
     }
 
-    makeComplaint(){
+    showMarketingInfo() {
+        if(this.isMarketingInfoHidden){
+            this.isMarketingInfoHidden = false;
+            return false;
+        }
+        return true;
+    }
+
+    makeComplaint() {
         var complaintDetails = new ComplaintDetails();
         complaintDetails.marketingInfo = this.marketingInfo;
         complaintDetails.reason = this.model.complaint;
@@ -47,14 +56,14 @@ export class ComplaintComponent {
         complaint.details = complaintDetails;
         this.complaintService.makeComplaint(complaint)
             .subscribe(
-                data => {
-                    this.alertService.success('Complaint made', true);
-                    this.router.navigate(['/']);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
+            data => {
+                this.alertService.success('Complaint made', true);
+                this.router.navigate(['/']);
+            },
+            error => {
+                this.alertService.error(error);
+                this.loading = false;
+            });
     }
     
     uploadLogo(){
@@ -65,13 +74,8 @@ export class ComplaintComponent {
                 data=>{
                     console.log(data);
                     if(!data.IsErroredOnProcessing){
-
                         let lines = data.ParsedResults[0].TextOverlay.Lines;
-
-                        lines.forEach(function(element){
-                            this.model.words.push(element.Words[0].WordText);
-                        });
-
+                        this.model.words = lines.map(element => element.Words[0].WordText);
                     }
                 },error=>{
                     console.log(error);

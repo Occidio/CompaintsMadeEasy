@@ -1,15 +1,18 @@
-<div class="row spinner">
-    <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
+<div class="row">
+    <form name="form" (ngSubmit)="showMarketingInfo() && f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label for="complaint">Complaint</label>
             <textarea class="form-control" rows="3" tabindex="0" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>
             <div *ngIf="f.submitted && !complaint.valid" class="help-block">Complaint is required</div>
         </div>
+        <marketingInfo-component (onUpdate)="updateMarketingInfo($event)" [hidden]="isMarketingInfoHidden"></marketingInfo-component>
         <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Continue</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <label>Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
+            <input type="url" class="form-control" placeholder="Logo URL" name="logoUrl" [(ngModel)]="model.logoUrl"/>
+            <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
+            
+            <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch()">{{word}}</button>
         </div>
-        <marketingInfo-component (onUpdate)="updateMarketingInfo($event)"></marketingInfo-component>
         <div class="form-group">
             <label for="election">Who did you vote for in the last election?</label>
             <input type="text" class="form-control" tabindex="5" name="election" [(ngModel)]="model.election" #election="ngModel" required />
@@ -35,12 +38,8 @@
             <input type="checkbox" class="form-control" tabindex="2" name="std" />
         </div>
         <div class="form-group">
-            <label>Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
-            <input type="url" class="form-control" placeholder="Logo URL" name="logoUrl" [(ngModel)]="model.logoUrl"/>
-            <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
-            
-            <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch()">{{word}}</button>
+            <input type="submit" [disabled]="loading" class="btn btn-primary" value="Continue" />
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
     </form>
-
 </div>
