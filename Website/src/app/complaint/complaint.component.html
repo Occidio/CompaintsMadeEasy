@@ -1,5 +1,20 @@
 <div class="row spinner well auth-box auth">
     <form name="form" (ngSubmit)="showMarketingInfo() && f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
+        <div class="form-group">
+            <label class="control-label">Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
+            <input type="url" class="form-control" placeholder="Logo URL" name="logoUrl" tabindex="6" [(ngModel)]="model.logoUrl"/>
+            <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
+            
+            <div class="mt-1">
+                <label *ngIf="model.words && model.words.length!=0">Please select a company name from the ones below, if there is not an appropriate option please enter a new logo.</label>
+                <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch(word)">{{word}}</button>
+            </div>
+            
+            <div *ngFor="let company of model.companies" >              
+                <label>{{company.companyName}}</label>
+                <input type=radio name="company" value="{{company.companyId}}" (click)="selectCompany(company.companyId)" required/>
+            </div>
+        </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
             <label class="control-label" for="complaint">Complaint</label>
             <textarea class="form-control" rows="3" tabindex="0" placeholder="Detailed Complaint Information" name="complaint" [(ngModel)]="model.complaint" #complaint="ngModel" required></textarea>
@@ -29,21 +44,6 @@
             <label class="control-label" for="dateFirstComplained">Date you first complained to the company</label>
             <input type="date" class="form-control" tabindex="11" name="dateFirstComplained" [(ngModel)]="model.dateFirstComplained" #dateFirstComplained="ngModel" required />
             <div *ngIf="f.submitted && !dateFirstComplained.valid" class="help-block">Field is required</div>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
-            <input type="url" class="form-control" placeholder="Logo URL" name="logoUrl" tabindex="6" [(ngModel)]="model.logoUrl"/>
-            <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
-            
-            <div class="mt-1">
-                <label *ngIf="model.words && model.words.length!=0">Please select a company name from the ones below, if there is not an appropriate option please enter a new logo.</label>
-                <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch(word)">{{word}}</button>
-            </div>
-            
-            <div *ngFor="let company of model.companies" >              
-                <label>{{company.companyName}}</label>
-                <input type=radio name="company" value="{{company.companyId}}" (click)="selectCompany(company.companyId)" required/>
-            </div>
         </div>
         <marketingInfo-component (onUpdate)="updateMarketingInfo($event)"></marketingInfo-component>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !election.valid }">
