@@ -44,6 +44,11 @@ body{
   font-weight:300;
   font-size:24px;
 }
+div.well{
+    background-color: transparent;    
+    border: none;
+
+}
 .nice .nice-box{
   background-color:#fff;
   max-width:460px;

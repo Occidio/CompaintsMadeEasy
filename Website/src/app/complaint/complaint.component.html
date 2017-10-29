@@ -36,10 +36,11 @@
             <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
             
             <div class="mt-1">
-                <button type="button" class="btn btn-primary" (click)="companySearch('ASDA')">asda</button>
+                <label *ngIf="model.words.length!=0">Please select a company name from the ones below, if there is not an appropriate option please enter a new logo.</label>
                 <button *ngFor="let word of model.words" type="button" class="btn btn-primary" (click)="companySearch(word)">{{word}}</button>
             </div>
-            <div *ngFor="let company of model.companies" >
+            
+            <div *ngFor="let company of model.companies" >              
                 <label>{{company.companyName}}</label>
                 <input type=radio name="company" value="{{company.companyId}}" (click)="selectCompany(company.companyId)" required/>
             </div>
