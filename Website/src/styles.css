@@ -2,7 +2,7 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 .spinner{
-    animation:spin 300s linear infinite;  
+    /*animation:spin 300s linear infinite;*/  
 }
 
 @keyframes spin { 
@@ -15,4 +15,193 @@
 .has-error{
     color: red;
     border-color: red;
+}
+
+.nice .jumbotron{
+    background-color: transparent;
+}
+
+
+.margin-top-20{
+  margin-top: 20px;
+}
+body{
+  background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/08/30/12087/3574f899daef41d2f145eba13ff7840f.jpg');
+  background-size:100% 100%;
+  background-attachment: fixed; 
+  background-repeat:no-repeat;
+  font-family: 'Open Sans', sans-serif;
+  padding-bottom: 40px;
+}
+.nice h1{
+  color:#fff!important;
+  font-weight:300;
+  font-family: 'Open Sans', sans-serif;
+}
+.nice h1 span{
+  font-size:21px;
+  display:block;
+  padding-top: 20px;
+}
+.nice .nice-box legend{
+  color:#fff;
+  border:none;
+  font-weight:300;
+  font-size:24px;
+}
+.nice .nice-box{
+  background-color:#fff;
+  max-width:460px;
+  margin:0 auto;
+  border:1px solid rgba(255, 255, 255, 0.4);;
+  background-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  margin-top:40px;
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.32);
+  -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.32);
+  box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.32);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-transition: background 1s ease-in-out;
+  -moz-transition: background 1s ease-in-out;
+  -ms-transition: background 1s ease-in-out;
+  -o-transition: background 1s ease-in-out;
+  transition: background 1s ease-in-out;
+}
+@media(max-width:460px){
+  .nice .nice-box{
+   margin:0 10px;
+ }
+}
+
+.nice .nice-box input::-webkit-input-placeholder { /* WebKit browsers */
+  color:    #fff;
+  font-weight:300;
+}
+.nice .nice-box input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #fff;
+  font-weight:300;
+}
+.nice .nice-box input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #fff;
+  font-weight:300;
+}
+.nice .nice-box input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #fff;
+  font-weight:300;
+}
+.nice span.input-group-addon,
+.input-group-btn button{
+  border:none;
+  background: #fff!important;
+  color:#000!important;
+}
+.nice form{
+    font-weight:300!important;
+}
+.nice form input[type="text"],
+.nice form input[type="password"],
+.nice form input[type="email"],
+.nice form input[type="date"]{
+  border:none;
+  padding:10px 0 10px 0;
+  background-color: rgba(255, 255, 255, 0)!important;
+  background: rgba(255, 255, 255, 0);
+  color:#fff;
+  font-size:16px;
+  border-bottom:1px dotted #fff;
+  border-radius:0;
+  box-shadow:none!important;
+  height:auto;
+}
+.nice textarea{
+  background-color: rgba(255, 255, 255, 0)!important;
+  color:#fff!important;
+}
+.nice input[type="file"] {
+  color:#fff;
+}
+.nice form label{
+    color:#fff;
+    font-size:21px;
+    font-weight:300;
+}
+/*for radios & checkbox labels*/
+.nice .radio label,
+.nice label.radio-inline,
+.nice .checkbox label,
+.nice label.checkbox-inline{
+    font-size: 14px;    
+}
+
+.nice form .help-block{
+    color:#fff;
+}
+.nice form select{
+  background-color: rgba(255, 255, 255, 0)!important;
+  background: rgba(255, 255, 255, 0);
+  color:#fff!important;
+  border-bottom:1px solid #fff!important;
+  border-radius:0;
+  box-shadow:none;
+}
+.nice form select option{
+    color:#000;
+}
+/*multiple select*/
+.nice select[multiple] option, 
+.nice select[size] {
+  color:#fff!important;
+}
+
+/*Form buttons*/
+.nice form .btn{
+  background:none;
+  -webkit-transition: background 0.2s ease-in-out;
+  -moz-transition: background 0.2s ease-in-out;
+  -ms-transition: background 0.2s ease-in-out;
+  -o-transition: background 0.2s ease-in-out;
+  transition: background 0.2s ease-in-out;
+}
+.nice form .btn-default{
+    color:#fff;
+    border-color:#fff;
+}
+.nice form .btn-default:hover{
+    background:rgba(225, 225, 225, 0.3);
+  color:#fff;
+  border-color:#fff;
+}
+.nice form .btn-primary:hover{
+    background:rgba(66, 139, 202, 0.3);
+}
+.nice form .btn-success:hover{
+    background:rgba(92, 184, 92, 0.3);
+}
+.nice form .btn-info :hover{
+    background:rgba(91, 192, 222, 0.3);
+}
+.nice form .btn-warning:hover{
+    background:rgba(240, 173, 78, 0.3);
+}
+.nice form .btn-danger:hover{
+    background:rgba(217, 83, 79, 0.3);
+}
+.nice form .btn-link{
+  border:none;
+  color:#fff;
+  padding-left:0;
+}
+.nice form .btn-link:hover{
+  background:none;
+}
+
+
+.nice label.label-floatlabel {
+  font-weight: 300;
+  font-size: 11px;
+  color:#fff;
+  left:0!important;
+  top: 1px!important;
 }
