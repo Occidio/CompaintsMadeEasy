@@ -1,4 +1,10 @@
-
+<script>
+window.scrollBy({ 
+  top: 100, // could be negative value
+  left: 0, 
+  behavior: 'smooth' 
+});
+</script>
 <div class="row">
     <form name="form" (ngSubmit)="f.form.valid && makeComplaint()" #f="ngForm" novalidate style="width=100%">
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !complaint.valid }">
@@ -35,7 +41,7 @@
             <label for="std">Do you have any STDs?</label>
             <input type="checkbox" class="form-control" name="std" />
         </div>
-        <div class="form-group"
+        <div class="form-group">
             <label>Please enter the url of an image for the company you wish to make a complaint for. The image must include the name of the company.</label>
             <input type="url" class="form-control" placeholder="Logo URL" name="logoUrl" [(ngModel)]="model.logoUrl"/>
             <button type="button" class="btn btn-primary" (click)="uploadLogo()">Upload</button>
