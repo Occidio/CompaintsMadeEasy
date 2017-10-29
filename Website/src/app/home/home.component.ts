@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/index';
 import { UserService } from '../_services/index';
 
+import { ComplaintComponent } from '../complaint/index';
+
 @Component({
     moduleId: module.id,
     templateUrl: 'home.component.html'

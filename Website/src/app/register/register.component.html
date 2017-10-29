@@ -11,15 +11,15 @@
             <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
             <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !surname.valid }">
+            <label for="surname">Last Name</label>
+            <input type="text" class="form-control" name="surname" [(ngModel)]="model.surname" #surname="ngModel" required />
+            <div *ngIf="f.submitted && !surname.valid" class="help-block">Last Name is required</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phoneNumber.valid }">
-            <label for="phoneNumber">Phone Number</label>
-            <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" required />
-            <div *ngIf="f.submitted && !phoneNumber.valid" class="help-block">Phone Number is required</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !mobilePhone.valid }">
+            <label for="mobilePhone">Phone Number</label>
+            <input type="text" class="form-control" name="mobilePhone" [(ngModel)]="model.mobilePhone" #mobilePhone="ngModel" required />
+            <div *ngIf="f.submitted && !mobilePhone.valid" class="help-block">Phone Number is required</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
             <label for="email">Email</label>

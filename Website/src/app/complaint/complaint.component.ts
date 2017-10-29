@@ -4,13 +4,15 @@ import { User } from '../_models/index';
 import { UserService } from '../_services/index';
 
 @Component({
+    selector: 'complaint-component',
     moduleId: module.id,
     templateUrl: 'complaint.component.html'
 })
 
-export class ComplaintComponent implements OnInit {
+export class ComplaintComponent {
     currentUser: User;
-    users: User[] = [];
+    model: any = {};
+    loading = false;
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -18,5 +20,9 @@ export class ComplaintComponent implements OnInit {
 
     ngOnInit() {
         //this.loadAllUsers();
+    }
+
+    continue(){
+        // some shit here
     }
 }
