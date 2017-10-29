@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../_models/index';
+import { User, Complaint, ComplaintDetails } from '../_models/index';
 import { UserService, ComplaintService, AlertService } from '../_services/index';
 
 @Component({
@@ -14,6 +14,7 @@ export class ComplaintComponent {
     currentUser: User;
     model: any = {};
     loading = false;
+    marketingInfo: boolean;
 
     constructor(
         private router: Router,
@@ -31,8 +32,18 @@ export class ComplaintComponent {
         // some shit here
     }
 
-    makeComplaint(user){
-        this.complaintService.makeComplaint(user)
+    public updateMarketingInfo(marketingInfo: any):void {
+        this.marketingInfo = marketingInfo;
+    }
+
+    makeComplaint(){
+        var complaintDetails = new ComplaintDetails();
+        complaintDetails.marketingInfo = this.marketingInfo;
+        var complaint = new Complaint();
+        complaint.accountId = this.currentUser.accountId;
+        complaint.companyId = 1;
+        complaint.details = complaintDetails;
+        this.complaintService.makeComplaint(complaint)
             .subscribe(
                 data => {
                     this.alertService.success('Complaint made', true);

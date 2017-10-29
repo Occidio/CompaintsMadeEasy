@@ -12,7 +12,7 @@ import { AlertService, AuthenticationService, UserService, ComplaintService } fr
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
-import { ComplaintComponent } from './complaint/index';
+import { ComplaintComponent, MarketingInfoComponent } from './complaint/index';
 
 @NgModule({
     imports: [
@@ -27,13 +27,15 @@ import { ComplaintComponent } from './complaint/index';
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        ComplaintComponent
+        ComplaintComponent,
+        MarketingInfoComponent
     ],
     providers: [
         AuthGuard,
         AlertService,
         AuthenticationService,
-        UserService
+        UserService,
+        ComplaintService
     ],
     bootstrap: [AppComponent]
 })

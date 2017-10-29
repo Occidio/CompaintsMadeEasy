@@ -1,7 +1,7 @@
 var method = Account.prototype;
 
-function Account(accountid, password, title, firstName, surname, email, mobilePhone) {
-    this.accountid = accountid;
+function Account(accountId, password, title, firstName, surname, email, mobilePhone) {
+    this.accountId = accountId;
     this.password = password;
     this.title = title;
     this.firstName = firstName;
